@@ -1,0 +1,25 @@
+---
+# UFW: Limit NUT and SSH connections to local network:
+network_cidr: "192.168.1.0/24"
+
+# NUT process account:
+nut_user: nut
+nut_group: nut
+# NUT clinet/server communication port:
+nut_port: 3493
+
+# NUT UPS device match pattern
+
+nut_matcher: ".*(UPS|Uninterruptible Power Supply).*"
+
+# NUT client/server communication accounts:
+nut_admin_user: "admin"
+nut_admin_password: "admin_pass"
+nut_reader_user: "reader"
+nut_reader_password: "reader_pass"
+
+# Enable EXEC scripting on these NUT commands
+nut_execute: ["online", "onbatt", "lowbatt"]
+
+# Interval between NUT heartbeat stages
+nut_heartbeat: 120

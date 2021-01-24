@@ -1,0 +1,43 @@
+---
+- name: Install NUT packages
+  apt:
+    name: ["nut", "nut-client", "nut-server"]
+    state: present
+    update_cache: true
+    autoremove: true
+    autoclean: true
+  register: apt_result
+
+- name: Reboot server
+  reboot:
+  when: apt_result.changed
+
+- name: Create NUT configuration directory
+  file:
+    path: /var/run/nut/
+    state: directory
+    owner: "{{ nut_user }}"
+    group: "{{ nut_group }}"
+    mode: 0640
+
+- name: Find configuration files
+  find:
+    path: /etc/nut
+    file_type: file
+  register: find_result
+
+- name: Fix configuration file permissions
+  file:
+    path: "{{ item.path }}"
+    owner: root
+    group: "{{ nut_group }}"
+    mode: 0640
+  with_items: "{{ find_result.files }}"
+
+- name: Fix configuration directory permissions
+  file:
+    path: /etc/nut
+    state: directory
+    owner: root
+    group: "{{ nut_group }}"
+    mode: 0755

@@ -1,0 +1,13 @@
+# Ansible generated file. Do NOT edit.
+
+{% for ups in ups_devices %}
+[ups-{{ loop.index }}]
+  driver = usbhid-ups
+  port = auto
+  desc = "{{ ups }}"
+{% endfor %}
+
+[ups-H]
+  driver = dummy-ups
+  port = ups-heartbeat.conf
+  desc = "UPS Heartbeat"

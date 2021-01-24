@@ -1,0 +1,14 @@
+# Ansible generated file. Do NOT edit.
+
+# Heartbeat: 
+#
+#   online -> on battery -> low battery
+#
+# With {{ nut_heartbeat }} seconds between stages.
+
+ups.status: OL
+TIMER {{ nut_heartbeat }}
+ups.status: OB
+TIMER {{ nut_heartbeat }}
+ups.status: LB
+TIMER {{ nut_heartbeat }}

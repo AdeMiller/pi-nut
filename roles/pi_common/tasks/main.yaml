@@ -1,0 +1,53 @@
+---
+- name: Update apt repositories and cache
+  apt:
+    update_cache: true
+    force_apt_get: true
+    cache_valid_time: 3600
+    autoremove: true
+    autoclean: true
+
+- name: Full apt upgrade
+  apt:
+    upgrade: dist
+    force_apt_get: true
+    autoremove: true
+    autoclean: true
+
+- name: Check if a reboot is needed
+  stat:
+    path: /var/run/reboot-required
+    get_md5: false
+  register: reboot_required_file
+
+- name: Reboot
+  reboot:
+    msg: "Reboot initiated by Ansible due to kernel updates"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: reboot_required_file.stat.exists
+
+- name: Install UFW packages
+  apt:
+    name: ["ufw"]
+    state: present
+    update_cache: true
+    autoremove: true
+    autoclean: true
+  register: ufw_result
+
+- name: Add UFW firewall rules
+  community.general.ufw:
+    rule: allow
+    src: "{{ network_cidr }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - { port: "ssh", proto: "tcp" }
+
+- name: Enable UFW firewall
+  community.general.ufw:
+    state: enabled

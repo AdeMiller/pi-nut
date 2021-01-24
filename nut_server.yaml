@@ -1,0 +1,6 @@
+---
+- hosts: nut_server
+  roles:
+    - pi_common
+    - nut_common
+    - nut_server

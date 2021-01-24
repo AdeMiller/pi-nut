@@ -1,0 +1,17 @@
+# Ansible generated file. Do NOT edit.
+
+CMDSCRIPT /usr/sbin/upssched-cmd.sh
+PIPEFN /var/lib/ups/upssched.pipe
+LOCKFN /var/lib/ups/upssched.lock
+
+{% for h in groups['nut_server'] %}
+# Host: {{ h }}
+
+{%   for e in nut_execute %}
+{%     for d in hostvars[h]['ups_devices'] %}
+AT {{ "%-8s" | format(e.upper(),) }} ups-{{ loop.index }}@{{ h }} EXECUTE "ups-{{ loop.index }}@{{ h }} {{ e }}"
+{%     endfor %}
+AT {{ "%-8s" | format(e.upper(),) }} ups-H@{{ h }} EXECUTE "ups-H@{{ h }} {{ e }}"
+{%   endfor %}
+
+{% endfor %}

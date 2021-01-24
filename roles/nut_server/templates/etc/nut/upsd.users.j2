@@ -1,0 +1,10 @@
+# Ansible generated file. Do NOT edit.
+
+[{{ nut_admin_user }}]
+  password = {{ nut_admin_password }}
+  actions = SET
+  instcmds = ALL
+
+[{{ nut_reader_user }}]
+  password = {{ nut_reader_password }}
+  upsmon slave

@@ -1,0 +1,54 @@
+# Ansible generated file. Do NOT edit.
+
+RUN_AS_USER {{ nut_user }}
+
+{% set s = [0] %}
+{% for h in groups['nut_server'] %}
+{%   if h == inventory_hostname %}
+# Host: {{ h }} {{ ansible_default_ipv4.address }} [local]
+{%   else %}
+# Host: {{ h }} {{ ansible_default_ipv4.address }}
+{%   endif %}
+
+{%   for d in hostvars[h]['ups_devices'] %}
+# UPS: {{ d | regex_replace('^Bus (\d+) Device (\d+): ID [0-9a-f]+:[0-9a-f]+ (.*)$', '\\1:\\2 \\3') }}
+{%     if h == ansible_default_ipv4.address %}
+{%       if s.append(s.pop() + 1) %}{% endif %}
+MONITOR ups-{{ loop.index }}@{{ h }} 1 {{ nut_reader_user }} {{ nut_reader_password }} slave
+{%     else %}
+MONITOR ups-{{ loop.index }}@{{ h }} 0 {{ nut_reader_user }} {{ nut_reader_password }} slave
+{%     endif %}
+# UPS: Heartbeat Monitor
+MONITOR ups-H@{{ h }} 0 {{ nut_reader_user }} {{ nut_reader_password }} slave
+
+{%   endfor %}
+{% endfor %}
+MINSUPPLIES {{ s[0] }}
+SHUTDOWNCMD "/sbin/shutdown -h +0"
+NOTIFYCMD /usr/sbin/upssched
+POLLFREQ 2
+POLLFREQALERT 1
+HOSTSYNC 15
+DEADTIME 15
+POWERDOWNFLAG /etc/killpower
+
+NOTIFYMSG ONLINE    "UPS %s on line power"
+NOTIFYMSG ONBATT    "UPS %s on battery"
+NOTIFYMSG LOWBATT   "UPS %s battery is low"
+NOTIFYMSG FSD       "UPS %s: forced shutdown in progress"
+NOTIFYMSG COMMOK    "Communications with UPS %s established"
+NOTIFYMSG COMMBAD   "Communications with UPS %s lost"
+NOTIFYMSG SHUTDOWN  "Auto logout and shutdown proceeding"
+NOTIFYMSG REPLBATT  "UPS %s battery needs to be replaced"
+NOTIFYMSG NOCOMM    "UPS %s is unavailable"
+NOTIFYMSG NOPARENT  "upsmon parent process died - shutdown impossible"
+
+{% for e in [ "online", "onbatt", "lowbatt", "fsd", "commok", "commbad", "shutdown", "replbatt", "nocomm", "noparent" ] %}
+NOTIFYFLAG {{ "%-8s" | format(e.upper(),) }} SYSLOG{{ "+EXEC" if e in nut_execute else "" }}
+{% endfor %}
+
+RBWARNTIME 43200
+
+NOCOMMWARNTIME 600
+
+FINALDELAY 5

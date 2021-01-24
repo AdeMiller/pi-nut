@@ -1,0 +1,16 @@
+[all:vars]
+ansible_become=true
+ansible_connection=ssh
+ansible_user=pi
+ansible_ssh_pass="xxxxxxxx"
+
+[nut_client]
+nut-manager.mydomain.com
+
+[nut_server]
+nut-a.mydomain.com
+nut-b.mydomain.com
+nut-c.mydomain.com
+
+[nut_web]
+nut-manager.mydomain.com

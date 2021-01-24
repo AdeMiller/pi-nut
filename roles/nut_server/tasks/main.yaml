@@ -1,0 +1,42 @@
+---
+- name: Get USB devices
+  command: lsusb
+  changed_when: false
+  register: lsusb_result
+
+- set_fact:
+    ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list }}"
+
+- name: Create NUT UPS configurations
+  template:
+    src: "templates/{{ item }}.j2"
+    dest: "/{{ item }}"
+    owner: root
+    group: nut
+    mode: 0640
+  register: ups_configs_result
+  with_items:
+    - etc/nut/ups.conf
+    - etc/nut/ups-heartbeat.conf
+    - etc/nut/upsd.conf
+    - etc/nut/upsd.users
+
+- name: Update NUT configuration mode
+  lineinfile:
+    path: /etc/nut/nut.conf
+    regexp: "^MODE="
+    line: "MODE=netserver"
+  register: nut_config_result
+
+- name: Reboot server
+  reboot:
+  when: ups_configs_result.changed or nut_config_result.changed
+
+- name: Add UFW firewall rules
+  community.general.ufw:
+    rule: allow
+    src: "{{ network_cidr }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - { port: "{{ nut_port }}", proto: "tcp" }

@@ -1,0 +1,11 @@
+# Ansible generated file. Do NOT edit.
+
+LISTEN 127.0.0.1 {{ nut_port }}
+LISTEN {{ ansible_default_ipv4.address }} {{ nut_port }}
+
+ACL all 0.0.0.0/0
+ACL localhost 127.0.0.1/32
+ACL upsnet  {{ network_cidr }}
+ACCEPT localhost
+ACCEPT upsnet
+REJECT all

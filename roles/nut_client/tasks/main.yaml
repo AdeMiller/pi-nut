@@ -1,0 +1,52 @@
+---
+- name: Create NUT monitor configuration
+  template:
+    src: "templates/{{ item }}.j2"
+    dest: "/{{ item }}"
+  register: config_result
+  with_items:
+    - etc/nut/upsmon.conf
+    - etc/nut/upssched.conf
+
+- debug: var=inventory_hostname
+
+- name: Create NUT command scripts
+  copy:
+    src: "files/{{ item }}"
+    dest: "/{{ item }}"
+    owner: "{{ nut_user }}"
+    group: "{{ nut_group }}"
+    mode: 0750
+  with_items:
+    - usr/sbin/upssched-cmd.sh
+
+- name: Create NUT lock file directory
+  file:
+    path: /var/lib/ups/
+    state: directory
+    owner: "{{ nut_user }}"
+    group: "{{ nut_group }}"
+    mode: 0644
+
+# - name: Update NUT configuration mode
+#   lineinfile:
+#     path: /etc/nut/nut.conf
+#     regexp: "^MODE="
+#     line: "MODE=netclient"
+#   register:
+
+- name: Start NUT monitor
+  service:
+    name: nut-monitor
+    state: started
+    enabled: true
+
+- name: Restart NUT monitor for new configuration
+  service:
+    name: nut-monitor
+    state: restarted
+  when: config_result.changed
+
+- name: Log playbook completion
+  command: logger -i -t Ansible "Playbook completed"
+  changed_when: false
