@@ -7,7 +7,9 @@
   desc = "{{ ups }}"
 {% endfor %}
 
+{% if heartbeat_enabled %)
 [ups-H]
   driver = dummy-ups
   port = ups-heartbeat.conf
   desc = "UPS Heartbeat"
+{% endif %)

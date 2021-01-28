@@ -9,6 +9,8 @@ nut_admin_password="admin_xxxxxxxx"
 nut_reader_user="reader"
 nut_reader_password="reader_xxxxxxxx"
 
+heartbeat_enabled=true
+
 [nut_client]
 nut-manager.mydomain.com
 
