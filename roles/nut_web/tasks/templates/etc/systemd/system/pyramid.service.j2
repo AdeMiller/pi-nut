@@ -1,0 +1,14 @@
+# Ansible generated file. Do NOT edit.
+
+[Unit]
+Description=pyramid_webnut
+After=network.target
+
+[Service]
+User=pserve
+Group=pserve
+WorkingDirectory=/usr/src/webNUT
+ExecStart=/usr/bin/pserve3 /usr/src/webNUT/webnut.ini
+
+[Install]
+WantedBy=multi-user.target

@@ -35,17 +35,17 @@
 #     line: "MODE=netclient"
 #   register:
 
-- name: Start NUT monitor
-  service:
-    name: nut-monitor
-    state: started
-    enabled: true
-
 - name: Restart NUT monitor for new configuration
   service:
     name: nut-monitor
     state: restarted
   when: config_result.changed
+
+- name: Ensure NUT monitor is started
+  service:
+    name: nut-monitor
+    state: started
+    enabled: true
 
 - name: Log playbook completion
   command: logger -i -t Ansible "Playbook completed"

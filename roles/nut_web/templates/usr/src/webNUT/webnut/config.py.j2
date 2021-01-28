@@ -1,0 +1,9 @@
+from .webnut import NUTServer
+
+# Ansible generated file. Do NOT edit.
+
+servers = [
+{% for h in groups['nut_server'] %}
+    NUTServer('{{ h }}', {{ nut_port }}, "{{ nut_reader_user }}", "{{ nut_reader_password }}"),
+{% endfor %}
+]

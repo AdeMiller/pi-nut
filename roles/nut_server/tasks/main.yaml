@@ -4,8 +4,12 @@
   changed_when: false
   register: lsusb_result
 
+# - debug: var=lsusb_result
+
 - set_fact:
     ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list }}"
+
+- debug: var=ups_devices
 
 - name: Create NUT UPS configurations
   template:

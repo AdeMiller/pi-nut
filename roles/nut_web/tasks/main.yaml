@@ -1,0 +1,84 @@
+---
+- name: Install packages
+  apt:
+    name:
+      [
+        "git",
+        "python3-pip",
+        "python3-pyramid",
+        "python-setuptools",
+        "python3-setuptools",
+      ]
+    state: present
+    update_cache: true
+    autoremove: true
+    autoclean: true
+  register: apt_result
+
+- name: Install PIP packages
+  pip:
+    name: ["pip", "setuptools", "wheel"]
+    executable: /usr/bin/pip3
+    state: latest
+
+- name: Git checkout WebNUT
+  git:
+    repo: "https://github.com/AdeMiller/webNUT.git"
+    dest: /usr/src/webNUT/
+
+- name: Ensure group pserve exists
+  group:
+    name: pserve
+    state: present
+
+- name: Ensure user pserve exists
+  user:
+    name: pserve
+    create_home: false
+    groups: [pserve]
+    append: yes
+
+- name: Create pserve3 and WebNUT configuration
+  template:
+    src: "templates/{{ item }}.j2"
+    dest: "/{{ item }}"
+    owner: root
+    group: pserve
+    mode: 0640
+  with_items:
+    - etc/systemd/system/pyramid.service
+    - usr/src/webNUT/webnut/config.py
+    - usr/src/webNUT/webnut.ini
+  register: config_result
+
+- name: Add UFW firewall rules
+  community.general.ufw:
+    rule: allow
+    src: "{{ network_cidr }}"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - { port: "{{ webnut_port }}", proto: "tcp" }
+
+- name: Setup WebNUT application
+  command:
+    cmd: python3 setup.py install
+    chdir: /usr/src/webNUT/
+  changed_when: false
+
+- name: Restart Pyramid service for new configuration
+  service:
+    name: pyramid
+    state: restarted
+  when: config_result.changed
+
+- name: Ensure Pyramid service is started
+  service:
+    name: pyramid
+    state: started
+    enabled: true
+
+- name: Clean up apt packages
+  apt:
+    autoremove: true
+    autoclean: true

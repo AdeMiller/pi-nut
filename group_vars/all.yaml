@@ -7,6 +7,8 @@ nut_user: nut
 nut_group: nut
 # NUT clinet/server communication port:
 nut_port: 3493
+# Port for WebNUT web server:
+webnut_port: 8080
 
 # NUT UPS device match pattern
 

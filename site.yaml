@@ -1,4 +1,4 @@
 ---
 - import_playbook: nut_server.yaml
 - import_playbook: nut_client.yaml
-# - import_playbook: nut_web.yaml
+- import_playbook: nut_web.yaml
