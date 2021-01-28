@@ -14,12 +14,6 @@ webnut_port: 8080
 
 nut_matcher: ".*(UPS|Uninterruptible Power Supply).*"
 
-# NUT client/server communication accounts:
-nut_admin_user: "admin"
-nut_admin_password: "admin_pass"
-nut_reader_user: "reader"
-nut_reader_password: "reader_pass"
-
 # Enable EXEC scripting on these NUT commands
 nut_execute: ["online", "onbatt", "lowbatt"]
 

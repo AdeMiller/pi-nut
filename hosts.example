@@ -2,7 +2,12 @@
 ansible_become=true
 ansible_connection=ssh
 ansible_user=pi
-ansible_ssh_pass="xxxxxxxx"
+ansible_ssh_pass="ssh_xxxxxxxx"
+
+nut_admin_user="admin"
+nut_admin_password="admin_xxxxxxxx"
+nut_reader_user="reader"
+nut_reader_password="reader_xxxxxxxx"
 
 [nut_client]
 nut-manager.mydomain.com
