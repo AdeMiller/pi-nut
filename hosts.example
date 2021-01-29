@@ -20,6 +20,8 @@ heartbeat_enabled=true
 
 # Hosts:
 
+# NUT Servers should have one of more UPS connected:
+
 [nut_server]
 nut-a.mydomain.com
 nut-b.mydomain.com
