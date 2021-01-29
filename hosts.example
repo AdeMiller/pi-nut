@@ -1,23 +1,32 @@
 [all:vars]
 ansible_become=true
 ansible_connection=ssh
+
+# The playbook uses the following credentials to access hosts:
+
 ansible_user=pi
-ansible_ssh_pass="ssh_xxxxxxxx"
+ansible_ssh_pass="<ssh_password>"
+
+# Credentials for NUT client/server traffic:
 
 nut_admin_user="admin"
-nut_admin_password="admin_xxxxxxxx"
+nut_admin_password="<admin_password>"
 nut_reader_user="reader"
-nut_reader_password="reader_xxxxxxxx"
+nut_reader_password="<reader_password>"
+
+# Enable heartbeat UPS
 
 heartbeat_enabled=true
 
-[nut_client]
-nut-manager.mydomain.com
+# Hosts:
 
 [nut_server]
 nut-a.mydomain.com
 nut-b.mydomain.com
 nut-c.mydomain.com
+
+[nut_client]
+nut-manager.mydomain.com
 
 [nut_web]
 nut-manager.mydomain.com

@@ -1,15 +1,20 @@
 # Ansible generated file. Do NOT edit.
 
+{% set ups_configs=ups_configs|default({}) %}
+{% set default_driver="usbhid-ups" %}
 {% for ups in ups_devices %}
+{%   set id = ups | regex_replace('^Bus \d+ Device \d+: ID ([0-9a-fA-F]+:[0-9a-fA-F]+) .*', '\\1') %}
+# UPS: {{ ups }} 
 [ups-{{ loop.index }}]
-  driver = usbhid-ups
+  driver = {{ ups_configs[id].driver|default(default_driver) }}
   port = auto
-  desc = "{{ ups }}"
-{% endfor %}
+  desc = "{{ ups_configs[id].desc|default(ups) }}"
 
-{% if heartbeat_enabled %)
+{% endfor %}
+# Heartbeat UPS
+{% if heartbeat_enabled %}
 [ups-H]
   driver = dummy-ups
   port = ups-heartbeat.conf
   desc = "UPS Heartbeat"
-{% endif %)
+{% endif %}

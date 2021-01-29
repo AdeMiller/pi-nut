@@ -1,0 +1,5 @@
+---
+# Additional configuration settings for each host:
+
+ups_configs:
+  "<device id>": { desc: "<description>", driver: "<driver>" }
