@@ -3,3 +3,4 @@
   roles:
     - pi_common
     - nut_web
+    - pi_final

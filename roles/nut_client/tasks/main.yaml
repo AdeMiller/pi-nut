@@ -46,7 +46,3 @@
     name: nut-monitor
     state: started
     enabled: true
-
-- name: Log playbook completion
-  command: logger -i -t Ansible "Playbook completed"
-  changed_when: false

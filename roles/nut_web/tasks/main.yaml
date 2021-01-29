@@ -77,8 +77,3 @@
     name: pyramid
     state: started
     enabled: true
-
-- name: Clean up apt packages
-  apt:
-    autoremove: true
-    autoclean: true

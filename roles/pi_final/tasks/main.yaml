@@ -1,0 +1,9 @@
+---
+- name: Clean up apt packages
+  apt:
+    autoremove: true
+    autoclean: true
+
+- name: Log playbook completion
+  command: logger -i -t Ansible "Playbook {{ ansible_play_name }} completed"
+  changed_when: false
