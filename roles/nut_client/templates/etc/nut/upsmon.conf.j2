@@ -5,9 +5,9 @@ RUN_AS_USER {{ nut_user }}
 {% set s = [0] %}
 {% for h in groups['nut_server'] %}
 {%   if h == inventory_hostname %}
-# Host: {{ h }} {{ ansible_default_ipv4.address }} [local]
+# Host: {{ h }} IP: {{ ansible_default_ipv4.address }} [local]
 {%   else %}
-# Host: {{ h }} {{ ansible_default_ipv4.address }}
+# Host: {{ h }} IP: {{ ansible_default_ipv4.address }}
 {%   endif %}
 
 {%   for d in hostvars[h]['ups_devices'] %}
@@ -25,7 +25,7 @@ MONITOR ups-H@{{ h }} 0 {{ nut_reader_user }} {{ nut_reader_password }} slave
 {% endfor %}
 MINSUPPLIES {{ s[0] }}
 SHUTDOWNCMD "/sbin/shutdown -h +0"
-NOTIFYCMD /usr/sbin/upssched
+NOTIFYCMD /sbin/upssched
 POLLFREQ 2
 POLLFREQALERT 1
 HOSTSYNC 15

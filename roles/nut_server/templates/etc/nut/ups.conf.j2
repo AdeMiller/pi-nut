@@ -11,7 +11,7 @@
   desc = "{{ ups_configs[id].desc|default(ups) }}"
 
 {% endfor %}
-# Heartbeat UPS
+# UPS: Heartbeat
 {% if heartbeat_enabled %}
 [ups-H]
   driver = dummy-ups

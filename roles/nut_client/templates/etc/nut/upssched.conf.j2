@@ -11,7 +11,9 @@ LOCKFN /var/lib/ups/upssched.lock
 {%     for d in hostvars[h]['ups_devices'] %}
 AT {{ "%-8s" | format(e.upper(),) }} ups-{{ loop.index }}@{{ h }} EXECUTE "ups-{{ loop.index }}@{{ h }} {{ e }}"
 {%     endfor %}
+{%     if heartbeat_enabled %}
 AT {{ "%-8s" | format(e.upper(),) }} ups-H@{{ h }} EXECUTE "ups-H@{{ h }} {{ e }}"
+{%     endif %}
 {%   endfor %}
 
 {% endfor %}
