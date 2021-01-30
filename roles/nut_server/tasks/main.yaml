@@ -1,12 +1,15 @@
 ---
 - name: Get USB devices
   command: lsusb
-  changed_when: false
+  tags: validation
   register: lsusb_result
+  changed_when: false
 
 # - debug: var=lsusb_result
 
-- set_fact:
+- name: Create UPS devices list
+  tags: validation
+  set_fact:
     ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list }}"
 
 - debug: var=ups_devices
@@ -44,3 +47,20 @@
     proto: "{{ item.proto }}"
   with_items:
     - { port: "{{ nut_port }}", proto: "tcp" }
+
+- name: Validation
+  block:
+    - name: Validate upsc client returns all UPS devices
+      command: upsc -L localhost
+      register: upsc_result
+      changed_when: false
+      failed_when: ups_devices|length != upsc_result.stdout_lines|select('match', '^ups-[0-9]+')|list|length
+
+    - name: Validate upsc client returns all UPS heartbeat devices
+      command: upsc -L localhost
+      register: upsc_result
+      changed_when: false
+      failed_when: 1 != upsc_result.stdout_lines|select('match', '^ups-H+')|list|length
+      when: heartbeat_enabled|bool
+
+  tags: validation

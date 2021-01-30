@@ -77,3 +77,22 @@
     name: pyramid
     state: started
     enabled: true
+
+- name: Validation
+  block:
+    - name: Validate web server running
+      uri:
+        url: http://localhost:{{webnut_port}}/
+        return_content: true
+      register: uri_result
+      failed_when: '"UPS Devices" not in uri_result.content'
+      changed_when: false
+
+    - name: Validate web server showing UPS servers
+      fail:
+        msg: "Server {{ item }} not found"
+      when: "item not in uri_result.content"
+      with_items: "{{ groups['nut_server'] }}"
+      changed_when: false
+
+  tags: validate
