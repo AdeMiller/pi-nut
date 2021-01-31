@@ -11,8 +11,8 @@
 - debug: var=inventory_hostname
 
 - name: Create NUT command scripts
-  copy:
-    src: "files/{{ item }}"
+  template:
+    src: "templates/{{ item }}.j2"
     dest: "/{{ item }}"
     owner: "{{ nut_user }}"
     group: "{{ nut_group }}"

@@ -18,7 +18,7 @@
 - name: Install PIP packages
   pip:
     name: ["pip", "setuptools", "wheel"]
-    executable: /usr/bin/pip3
+    executable: /usr/local/bin/pip3
     state: latest
 
 - name: Git checkout WebNUT

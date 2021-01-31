@@ -1,14 +1,14 @@
 ---
 - name: Get USB devices
+  tags: always
   command: lsusb
-  tags: validation
   register: lsusb_result
   changed_when: false
 
 # - debug: var=lsusb_result
 
 - name: Create UPS devices list
-  tags: validation
+  tags: always
   set_fact:
     ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list }}"
 

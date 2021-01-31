@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Ansible generated file. Do NOT edit.
+
+set -e
+
+function handle_heartbeat_event() {
+  case "${2}" in
+    {% for e in nut_execute %}{{e}}{{ "|" if not loop.last else "" }}{% endfor %})
+      logger -i -t "upssched-cmd" "Heartbeat Event: ${1} ${2}"
+      ;;
+    *)
+      logger -i -t "upssched-cmd" "Unsupported event \"${2}\""
+      ;;
+  esac
+}
+
+case "${1}" in
+{% for h in groups['nut_server'] %}
+{%   for d in hostvars[h]['ups_devices'] %}
+  "ups-{{ loop.index }}@{{ h }}")
+    case "${2}" in
+{%     for e in nut_execute %}
+      {{ e }})
+        logger -i -t "upssched-cmd" "Handling: ups-{{ loop.index }}@{{ h }} {{e}}"
+        ;;
+{%     endfor %}
+      *)
+        logger -i -t "upssched-cmd" "Unsupported event \"{e}\""
+        ;;
+      esac
+    ;;
+{%   endfor %}
+{%   if heartbeat_enabled %}
+  "ups-H@{{ h }}")
+    handle_heartbeat_event "${1}" ${2}
+    ;;
+{%   endif %}
+{% endfor %}
+  *)
+    logger -i -t "upssched-cmd" "Unknown UPS device \"${1}\""
+    ;;
+esac
