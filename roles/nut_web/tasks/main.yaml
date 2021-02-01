@@ -1,4 +1,6 @@
 ---
+# Install WebNUT server service.
+
 - name: Install packages
   apt:
     name:

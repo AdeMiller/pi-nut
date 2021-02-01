@@ -27,7 +27,7 @@ nut-a.mydomain.com
 nut-b.mydomain.com
 nut-c.mydomain.com
 
-[nut_client]
+[nut_monitor]
 nut-manager.mydomain.com
 
 [nut_web]

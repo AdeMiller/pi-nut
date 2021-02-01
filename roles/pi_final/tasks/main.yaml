@@ -1,4 +1,6 @@
 ---
+# Clean up installation and log playbook completion.s
+
 - name: Clean up apt packages
   apt:
     autoremove: true

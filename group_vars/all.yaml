@@ -5,13 +5,14 @@ network_cidr: "192.168.1.0/24"
 # NUT process account:
 nut_user: nut
 nut_group: nut
+
 # NUT clinet/server communication port:
 nut_port: 3493
+
 # Port for WebNUT web server:
 webnut_port: 8080
 
 # NUT UPS device match pattern
-
 nut_matcher: ".*(UPS|Uninterruptible Power Supply).*"
 
 # Interval between NUT heartbeat stages

@@ -1,4 +1,6 @@
 ---
+# Install NUT devices and server and configure UFW firewall rules.
+
 - name: Get USB devices
   tags: always
   command: lsusb

@@ -1,4 +1,6 @@
 ---
+# Update core Pi APT packages and install UFW firewall.
+
 - name: Update apt repositories and cache
   apt:
     update_cache: true

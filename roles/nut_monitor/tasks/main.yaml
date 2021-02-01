@@ -1,4 +1,6 @@
 ---
+# Configure NUT monitor.
+
 - name: Create NUT monitor configuration
   template:
     src: "templates/{{ item }}.j2"

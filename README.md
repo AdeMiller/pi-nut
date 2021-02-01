@@ -2,7 +2,7 @@
 
 Pi-NUT is an Ansible playbook and tools for deploying 
 [Network UPS Tools, NUT](https://networkupstools.org/documentation.html) 
-clients and servers onto Raspberry Pis. It supports configuration of many
+clients/monitors and servers onto Raspberry Pis. It supports configuration of many
 UPSes with automated discovery of UPS devices connected to each Raspberry Pi 
 based NUT server.
 
@@ -37,9 +37,9 @@ available on the Raspberry Pi.
 Each server can also be configured with a heartbeat UPS device which generates
 status for a dummy UPS.
 
-## nut_client
+## nut_monitor
 
-The NUT client connects to all NUT servers and monitors the UPS devices 
+The NUT monitor connects to all NUT servers and monitors the UPS devices 
 connected to them.
 
 ## nut_web
@@ -60,7 +60,7 @@ Additional settings for each host can be set in individual
 
 The `group_vars/all.yaml` file contains other global settings.
 
-The NUT client and NUT web can be installed on the same host, which can also be 
+The NUT monitor and NUT web can be installed on the same host, which can also be 
 a NUT server.
 
 # References

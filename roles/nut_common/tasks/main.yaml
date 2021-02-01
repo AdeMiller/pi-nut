@@ -1,4 +1,6 @@
 ---
+# Install NUT packages and set file permissions.
+
 - name: Install NUT packages
   apt:
     name: ["nut", "nut-client", "nut-server"]
@@ -41,33 +43,3 @@
     owner: root
     group: "{{ nut_group }}"
     mode: 0755
-# - name: Create certificate
-#   block:
-#     - name: Generate a self signed OpenSSL certificate
-#       command: openssl req -new -x509 -nodes -days 3650 -out /tmp/upsd.crt -keyout /tmp/upsd.key -subj "/C=US"
-#       args:
-#         creates: /tmp/upsd.crt
-
-#     - name: Generate a self signed OpenSSL certificate
-#       command: openssl x509 -hash -noout -in /tmp/upsd.crt
-#       register: cert_hash
-
-#     # cat upsd.crt upsd.key > upsd.pem
-#     # chown root:nut upsd.pem
-#     # chmod 0640 upsd.pem
-
-#     - name: Create PEM certificate
-#       shell: cat /tmp/upsd.crt /tmp/upsd.key > /tmp/upsd.pem
-#       args:
-#         creates: /tmp/upsd.pem
-
-#     - name: Set permissions
-#       file:
-#         src: "{{ item }}"
-#         user: "{{ nut_user }}"
-#         group: "{{ nut_group }}"
-#       with_items:
-#         - /tmp/
-
-#   tags: wip
-#   run_once: true
