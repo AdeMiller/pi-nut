@@ -4,13 +4,32 @@
 
 set -e
 
+# Default logging is to syslog but this can be overridden for testing
+ 
+log="logger -i -t \"upssched-cmd\"" 
+case "${1}" in
+  "-log_none")
+    log=":"
+    shift
+    ;;
+  "-log_local")
+    log="echo"
+    shift
+    ;;
+  "-log_system")
+    shift
+    ;;
+  *)
+    ;;
+esac
+
 function handle_heartbeat_event() {
   case "${2}" in
     {% for e in nut_execute %}{{e}}{{ "|" if not loop.last else "" }}{% endfor %})
-      logger -i -t "upssched-cmd" "Heartbeat Event: ${1} ${2}"
+      ${log} "Heartbeat Event: ${1} ${2}."
       ;;
     *)
-      logger -i -t "upssched-cmd" "Unsupported event \"${2}\""
+      ${log} "Unsupported event \"${2}\"."
       ;;
   esac
 }
@@ -22,11 +41,11 @@ case "${1}" in
     case "${2}" in
 {%     for e in nut_execute %}
       {{ e }})
-        logger -i -t "upssched-cmd" "Handling: ups-{{ loop.index }}@{{ h }} {{e}}"
+        ${log} "Handling: ups-{{ loop.index }}@{{ h }} {{e}}."
         ;;
 {%     endfor %}
       *)
-        logger -i -t "upssched-cmd" "Unsupported event \"{e}\""
+        ${log} "Unsupported event \"${2}\"."
         ;;
       esac
     ;;
@@ -38,6 +57,6 @@ case "${1}" in
 {%   endif %}
 {% endfor %}
   *)
-    logger -i -t "upssched-cmd" "Unknown UPS device \"${1}\""
+    ${log} "Unknown UPS device \"${1}\"."
     ;;
 esac
