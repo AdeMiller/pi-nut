@@ -1,7 +1,7 @@
 ---
 - hosts: nut_client
   roles:
-    - pi_common
-    - nut_common
-    - nut_client
+    - { role: "pi_common", tags: "pi_common" }
+    - { role: "nut_common", tags: "nut_common" }
+    - { role: "nut_client", tags: "nut_client" }
     - pi_final

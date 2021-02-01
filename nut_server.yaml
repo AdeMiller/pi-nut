@@ -1,8 +1,7 @@
 ---
 - hosts: nut_server
   roles:
-    - pi_common
-    - nut_common
-    - nut_server
+    - { role: "pi_common", tags: "pi_common" }
+    - { role: "nut_common", tags: "nut_common" }
+    - { role: "nut_server", tags: "nut_server" }
     - pi_final
-

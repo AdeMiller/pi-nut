@@ -1,6 +1,6 @@
 ---
 - hosts: nut_web
   roles:
-    - pi_common
-    - nut_web
+    - { role: "pi_common", tags: "pi_common" }
+    - { role: "nut_web", tags: "nut_web" }
     - pi_final
