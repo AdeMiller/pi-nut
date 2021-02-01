@@ -14,8 +14,5 @@ webnut_port: 8080
 
 nut_matcher: ".*(UPS|Uninterruptible Power Supply).*"
 
-# Enable EXEC scripting on these NUT commands
-nut_execute: ["online", "onbatt", "lowbatt"]
-
 # Interval between NUT heartbeat stages
 nut_heartbeat: 120

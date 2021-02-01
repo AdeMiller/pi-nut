@@ -6,9 +6,9 @@
 {%   set id = ups | regex_replace('^Bus \d+ Device \d+: ID ([0-9a-fA-F]+:[0-9a-fA-F]+) .*', '\\1') %}
 # UPS: {{ ups }} 
 [ups-{{ loop.index }}]
-  driver = {{ ups_configs[id].driver|default(default_driver) }}
+  driver = {{ ups_configs[id].driver | default(default_driver) }}
   port = auto
-  desc = "{{ ups_configs[id].desc|default(ups) }}"
+  desc = "{{ ups_configs[id].desc | default(ups) }}"
 
 {% endfor %}
 # UPS: Heartbeat

@@ -3,3 +3,14 @@
 
 ups_configs:
   "<device id>": { desc: "<description>", driver: "<driver>" }
+
+# Configure actions for each UPS and event. Now all events need actions.
+
+nut_actions:
+  {
+    "ups-1@nut-a.mydomain.com": { online: "echo ONLINE" },
+    "ups-1@nut-b.mydomain.com":
+      { online: "echo ONLINE", onbatt: "echo ONBATT" },
+    "ups-1@nut-c.mydomain.com":
+      { online: "echo ONLINE", lowbatt: "echo LOWBATT" },
+  }

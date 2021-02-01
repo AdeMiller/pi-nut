@@ -10,7 +10,7 @@
 - name: Create UPS devices list
   tags: always
   set_fact:
-    ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list }}"
+    ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list | sort}}"
 
 - name: Create NUT UPS configurations
   template:
@@ -52,13 +52,13 @@
       command: upsc -L localhost
       register: upsc_result
       changed_when: false
-      failed_when: ups_devices|length != upsc_result.stdout_lines|select('match', '^ups-[0-9]+')|list|length
+      failed_when: ups_devices | length != upsc_result.stdout_lines | select('match', '^ups-[0-9]+') | list | length
 
     - name: Validate upsc client returns all UPS heartbeat devices
       command: upsc -L localhost
       register: upsc_result
       changed_when: false
-      failed_when: 1 != upsc_result.stdout_lines|select('match', '^ups-H+')|list|length
-      when: heartbeat_enabled|bool
+      failed_when: 1 != upsc_result.stdout_lines | select('match', '^ups-H+') | list | length
+      when: heartbeat_enabled | bool
 
   tags: validation

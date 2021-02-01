@@ -7,7 +7,7 @@ LOCKFN /var/lib/ups/upssched.lock
 {% for h in groups['nut_server'] %}
 # Host: {{ h }}
 
-{%   for e in nut_execute %}
+{%   for e in nut_events %}
 {%     for d in hostvars[h]['ups_devices'] %}
 AT {{ "%-8s" | format(e.upper(),) }} ups-{{ loop.index }}@{{ h }} EXECUTE "ups-{{ loop.index }}@{{ h }} {{ e }}"
 {%     endfor %}

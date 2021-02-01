@@ -44,7 +44,7 @@ NOTIFYMSG NOCOMM    "UPS %s is unavailable"
 NOTIFYMSG NOPARENT  "upsmon parent process died - shutdown impossible"
 
 {% for e in [ "online", "onbatt", "lowbatt", "fsd", "commok", "commbad", "shutdown", "replbatt", "nocomm", "noparent" ] %}
-NOTIFYFLAG {{ "%-8s" | format(e.upper(),) }} SYSLOG{{ "+EXEC" if e in nut_execute else "" }}
+NOTIFYFLAG {{ "%-8s" | format(e.upper(),) }} SYSLOG{{ "+EXEC" if e in nut_events else "" }}
 {% endfor %}
 
 RBWARNTIME 43200
