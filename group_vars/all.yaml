@@ -12,8 +12,8 @@ nut_port: 3493
 # Port for WebNUT web server:
 webnut_port: 8080
 
-# NUT UPS device match pattern
+# NUT UPS device match pattern:
 nut_matcher: ".*(UPS|Uninterruptible Power Supply).*"
 
-# Interval between NUT heartbeat stages
+# Interval between NUT heartbeat stages:
 nut_heartbeat: 120

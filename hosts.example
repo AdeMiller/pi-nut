@@ -14,7 +14,7 @@ nut_admin_password="<admin_password>"
 nut_reader_user="reader"
 nut_reader_password="<reader_password>"
 
-# Enable heartbeat UPS
+# Enable heartbeat UPS:
 
 heartbeat_enabled=true
 
