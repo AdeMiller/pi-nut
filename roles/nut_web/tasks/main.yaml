@@ -92,7 +92,7 @@
       failed_when: '"UPS Devices" not in uri_result.content'
       changed_when: false
 
-    - name: Validate web server showing UPS servers
+    - name: Validate web server fail when missing UPS servers
       fail:
         msg: "Server {{ item }} not found"
       when: "item not in uri_result.content"
