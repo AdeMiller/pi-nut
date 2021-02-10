@@ -66,4 +66,4 @@
       failed_when: 1 != upsc_result.stdout_lines | select('match', '^ups-H+') | list | length
       when: heartbeat_enabled | bool
 
-  tags: validation
+  tags: validate

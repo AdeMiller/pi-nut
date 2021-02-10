@@ -2,6 +2,7 @@
 # Update core Pi APT packages and install UFW firewall.
 
 - name: Update apt repositories and cache
+  tags: pi_upgrade
   apt:
     update_cache: true
     force_apt_get: true
@@ -10,6 +11,7 @@
     autoclean: true
 
 - name: Full apt upgrade
+  tags: pi_upgrade
   apt:
     upgrade: dist
     force_apt_get: true
