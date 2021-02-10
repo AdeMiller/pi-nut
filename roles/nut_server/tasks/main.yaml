@@ -19,7 +19,7 @@
     src: "templates/{{ item }}.j2"
     dest: "/{{ item }}"
     owner: root
-    group: nut
+    group: "{{ nut_group }}"
     mode: 0640
   register: ups_configs_result
   with_items:

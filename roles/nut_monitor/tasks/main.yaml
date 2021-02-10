@@ -5,6 +5,9 @@
   template:
     src: "templates/{{ item }}.j2"
     dest: "/{{ item }}"
+    owner: "{{ nut_user }}"
+    group: "{{ nut_group }}"
+    mode: 0640
   register: config_result
   with_items:
     - etc/nut/upsmon.conf
