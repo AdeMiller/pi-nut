@@ -1,5 +1,5 @@
 ---
-# Clean up installation and log playbook completion.s
+# Clean up installation and log playbook completion.
 
 - name: Clean up apt packages
   apt:

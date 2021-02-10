@@ -12,7 +12,10 @@
 - name: Create UPS devices list
   tags: always
   set_fact:
-    ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list | sort}}"
+    ups_devices: "{{ lsusb_result.stdout_lines | select('match', nut_matcher) | list | sort }}"
+
+- name: UPS devices
+  debug: var=ups_devices
 
 - name: Create NUT UPS configurations
   template:

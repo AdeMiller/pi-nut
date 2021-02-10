@@ -43,3 +43,17 @@
     owner: root
     group: "{{ nut_group }}"
     mode: 0755
+
+# Both servers and monitors are configured with
+# the same MODE.
+
+- name: Create NUT main configuration
+  template:
+    src: "templates/{{ item }}.j2"
+    dest: "/{{ item }}"
+    owner: "{{ nut_user }}"
+    group: "{{ nut_group }}"
+    mode: 0640
+  register: config_result
+  with_items:
+    - etc/nut/nut.conf
