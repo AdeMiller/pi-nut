@@ -16,4 +16,4 @@ webnut_port: 8080
 nut_matcher: ".*(UPS|Uninterruptible Power Supply).*"
 
 # Interval between NUT heartbeat stages:
-nut_heartbeat: 120
+nut_heartbeat: 60

@@ -6,7 +6,27 @@
 #
 # With {{ nut_heartbeat }} seconds between stages.
 
-ups.status: OL
+ups.status:     OL
+battery.charge  100
+battery.runtime 4000
 TIMER {{ nut_heartbeat }}
-ups.status: OB
+ups.status:     OB
+battery.charge  80
+battery.runtime 3200
+TIMER {{ nut_heartbeat }}
+ups.status:     OB
+battery.charge  60
+battery.runtime 2400
+TIMER {{ nut_heartbeat }}
+ups.status:     OB
+battery.charge  40
+battery.runtime 1600
+TIMER {{ nut_heartbeat }}
+ups.status:     LB
+battery.charge  20
+battery.runtime 800
+TIMER {{ nut_heartbeat }}
+ups.status:     LB
+battery.charge  0
+battery.runtime 0
 TIMER {{ nut_heartbeat }}
