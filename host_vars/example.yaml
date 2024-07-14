@@ -1,0 +1,18 @@
+---
+# Additional configuration settings for each host. These just override the description 
+# and driver settings derived from lsusb. 
+
+ups_configs:
+  "<device id>":
+    desc: "<description>"
+    driver: "<driver>"
+
+# Configure actions for each UPS and event attached to this host. 
+# Not all events need actions, but nut_actions must be defined for each host.
+
+nut_actions:
+  "ups-1@nut-monitor-a.mydomain.com":
+    online: "echo ONLINE"
+  "ups-2@nut-monitor-a.mydomain.com":
+    online: "echo ONLINE"
+    onbatt: "echo ONBATT"

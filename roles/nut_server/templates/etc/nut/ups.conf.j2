@@ -4,15 +4,16 @@
 {% set default_driver="usbhid-ups" %}
 {% for ups in ups_devices %}
 {%   set id = ups | regex_replace('^Bus \d+ Device \d+: ID ([0-9a-fA-F]+:[0-9a-fA-F]+) .*', '\\1') %}
-# UPS: {{ ups }} 
+# UPS: {{ ups }}
+# ID: {{ id }}
 [ups-{{ loop.index }}]
   driver = {{ ups_configs[id].driver | default(default_driver) }}
   port = auto
   desc = "{{ ups_configs[id].desc | default(ups) }}"
 
 {% endfor %}
-# UPS: Heartbeat
 {% if heartbeat_enabled %}
+# UPS: Heartbeat
 [ups-H]
   driver = dummy-ups
   port = ups-heartbeat.conf

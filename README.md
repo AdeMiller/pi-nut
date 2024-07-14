@@ -53,10 +53,13 @@ several UPS devices, limited by the number of available USB connections
 available on the Raspberry Pi. 
 
 The host_vars file for each server can be configured to override the default
-driver and description for the UPS.
+driver and description for the UPS. The device IDs are extracted from the results
+returned by `lsusb`.
 ```
 ups_configs:
-  "<device id>": { desc: "<description>", driver: "<driver>" }
+  "<device id>": 
+    desc: "<description>"
+    driver: "<driver>"
 ```
 
 Each server can also be configured with a heartbeat UPS device which generates
@@ -77,13 +80,14 @@ up to events on each UPS.
 
 ```
 nut_actions:
-  {
-    "ups-1@nut-a.mydomain.com": { online: "echo ONLINE" },
-    "ups-1@nut-b.mydomain.com":
-      { online: "echo ONLINE", onbatt: "echo ONBATT" },
-    "ups-1@nut-c.mydomain.com":
-      { online: "echo ONLINE", lowbatt: "echo LOWBATT" },
-  }
+  "ups-1@nut-a.mydomain.com": 
+    online: "echo ONLINE"
+  "ups-1@nut-b.mydomain.com":
+    online: "echo ONLINE"
+    onbatt: "echo ONBATT"
+  "ups-1@nut-c.mydomain.com":
+    online: "echo ONLINE"
+      lowbatt: "echo LOWBATT" 
 ```
 
 ## nut_web

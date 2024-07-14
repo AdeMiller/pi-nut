@@ -14,21 +14,27 @@ nut_admin_password="<admin_password>"
 nut_reader_user="reader"
 nut_reader_password="<reader_password>"
 
-# Enable heartbeat UPS:
+# Enable heartbeat UPS for all UPS monitors:
 
 heartbeat_enabled=true
 
 # Hosts:
 
-# NUT Servers should have one of more UPS connected:
+# NUT Servers should have one or more UPS connected via USB.
 
 [nut_server]
 nut-a.mydomain.com
 nut-b.mydomain.com
 nut-c.mydomain.com
 
+# A single NUT monitor is required to collect results from all NUT servers.
+# This can run on the same host as a NUT server.
+
 [nut_monitor]
-nut-manager.mydomain.com
+nut-monitor.mydomain.com
+
+# Single NUT web server is required to display results from the NUT monitor.
+# This can run on the same host as a NUT server and/or NUT monitor.
 
 [nut_web]
-nut-manager.mydomain.com
+nut-web.mydomain.com

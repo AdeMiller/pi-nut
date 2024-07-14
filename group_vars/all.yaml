@@ -15,5 +15,8 @@ webnut_port: 8080
 # NUT UPS device match pattern:
 nut_matcher: ".*(UPS|Uninterruptible Power Supply).*"
 
-# Interval between NUT heartbeat stages:
+# Interval between NUT heartbeat stages in seconds:
 nut_heartbeat: 60
+
+# Events handled by NUT monitors in this galaxy:
+nut_events: ["online", "onbatt", "lowbatt"]
